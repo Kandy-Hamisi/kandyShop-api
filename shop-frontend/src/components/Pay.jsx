@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import StripeCheckout from 'react-stripe-checkout';
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
 const Container = styled.div`
@@ -28,6 +29,7 @@ const KEY = "pk_test_51JJIz8GLFwMKFO7cof6PlJqDdQda0ZyU01unwzPT9GnHhKLuQb5QBEMNLh
 const Pay = () => {
     
     const [ stripeToken, setStripeToken ] = useState(null);
+    const navigate = useNavigate()
 
     const onToken = (token) => {
         setStripeToken(token);
@@ -44,12 +46,13 @@ const Pay = () => {
                     }
                     );
                     console.log(response.data);
+                    navigate("/success")
             }catch(err) {
                 console.log(err)
             }
         }
         stripeToken && makeRequest();
-    }, [stripeToken])
+    }, [stripeToken, history])
 
   return (
     <Container>
